@@ -1734,7 +1734,7 @@ section {
 
 #footer .credits {
   float: right;
-  font-size: 13px;
+  /*font-size: 13px;*/
 }
 
 #footer .credits a {
