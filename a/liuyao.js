@@ -1005,9 +1005,9 @@ function textData(number, date, lunarDate){
     $('#xunkong').text(xunkongStr);
     $('#shensha').html(
         "贵人 (<span>太极="+TAIJIGUIREN[dayGan].join("")+"</span>"
-        +"<span class='mx-4'>天乙="+TIANYIGUIREN[dayGan]+"</span>"
+        +"<span class='mx-3'>天乙="+TIANYIGUIREN[dayGan]+"</span>"
         +"<span>天德="+TIANDEGUIREN[monthZhi]+"</span>"
-        +"<span class='mx-4'>月德="+YUEDEGUIREN[monthZhi]+")</span><br/>"
+        +"<span class='mx-3'>月德="+YUEDEGUIREN[monthZhi]+")</span><br/>"
         +"<span>天元禄="+TIANYUANLU[dayGan]+"</span>"
         +"<span class='mx-3'>驿马="+YIMA[timeZhi]+"</span>"
         +"<span>天喜="+TIANXI[monthZhi]+"</span>"
