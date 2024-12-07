@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>六爻占卜</title>
+    <link href="bootstrap.min.css" rel="stylesheet">
+    <script src="bootstrap.min.js"></script>
+    <script src="jquery-3.7.1.min.js"></script>
+    <script src="lunar.js"></script>
+    <script src="liuyao.js"></script>
+    <style type="text/css">
+        @media screen and (max-width: 500px) {
+            .fushen, .yaoci {display: none;}
+        }
+        @media screen and (min-width: 700px) {
+            .fushen, .yaoci {display: block;}
+        }
+    </style>
+</head>
+<body>
+<div class="my-3 text-center">
+    <div class="mb-5">
+        <button id="startBtn" type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#modal-simple">开始占卦</button>
+    </div>
+    <div class="mb-4">
+        <span id="dateLunar"></span><br/>
+        <span id="bazi"></span><br/>
+        <span id="xunkong"></span><br/>
+        <span id="shensha"></span>
+    </div>
+    <!-- 本卦 -->
+    <div class="container-fluid">
+        <div class="mb-4">
+            <span id="benming"></span><br/>
+            <span id="benguaci"></span><br/>
+        </div>
+        <div class="row justify-content-center">
+            <div style="width: 56px;">
+                <div id="benls5" class="mb-3 d-flex align-items-center" style="height: 30px;"></div>
+                <div id="benls4" class="mb-3 d-flex align-items-center" style="height: 30px;"></div>
+                <div id="benls3" class="mb-3 d-flex align-items-center" style="height: 30px;"></div>
+                <div id="benls2" class="mb-3 d-flex align-items-center" style="height: 30px;"></div>
+                <div id="benls1" class="mb-3 d-flex align-items-center" style="height: 30px;"></div>
+                <div id="benls0" class="mb-3 d-flex align-items-center" style="height: 30px;"></div>
+            </div>
+            <div class="fushen" style="width: 85px;">
+                <div id="benfs5" class="mb-3 d-flex align-items-center" style="height: 30px; width: 85px;"></div>
+                <div id="benfs4" class="mb-3 d-flex align-items-center" style="height: 30px; width: 85px;"></div>
+                <div id="benfs3" class="mb-3 d-flex align-items-center" style="height: 30px; width: 85px;"></div>
+                <div id="benfs2" class="mb-3 d-flex align-items-center" style="height: 30px; width: 85px;"></div>
+                <div id="benfs1" class="mb-3 d-flex align-items-center" style="height: 30px; width: 85px;"></div>
+                <div id="benfs0" class="mb-3 d-flex align-items-center" style="height: 30px; width: 85px;"></div>
+            </div>
+            <div class="mb-4" style="width: 350px;">
+                <div class="mb-3 d-flex align-items-center">
+                    <span id="benlgw5"></span>
+                    <canvas id="benliuCanvas" width="200" height="30" class="mx-2"></canvas>
+                    <span id="bensy5"></span>
+                </div>
+                <div class="mb-3 d-flex align-items-center">
+                    <span id="benlgw4"></span>
+                    <canvas id="benwuCanvas" width="200" height="30" class="mx-2"></canvas>
+                    <span id="bensy4"></span>
+                </div>
+                <div class="mb-3 d-flex align-items-center">
+                    <span id="benlgw3"></span>
+                    <canvas id="bensiCanvas" width="200" height="30" class="mx-2"></canvas>
+                    <span id="bensy3"></span>
+                </div>
+                <div class="mb-3 d-flex align-items-center">
+                    <span id="benlgw2"></span>
+                    <canvas id="bensanCanvas" width="200" height="30" class="mx-2"></canvas>
+                    <span id="bensy2"></span>
+                </div>
+                <div class="mb-3 d-flex align-items-center">
+                    <span id="benlgw1"></span>
+                    <canvas id="benerCanvas" width="200" height="30" class="mx-2"></canvas>
+                    <span id="bensy1"></span>
+                </div>
+                <div class="d-flex align-items-center">
+                    <span id="benlgw0"></span>
+                    <canvas id="benchuCanvas" width="200" height="30" class="mx-2"></canvas>
+                    <span id="bensy0"></span>
+                </div>
+            </div>
+            <div class="mb-4 yaoci" style="width: 408px;">
+                <div id="benyc5" class="mb-3 d-flex align-items-center" style="height: 30px;"></div>
+                <div id="benyc4" class="mb-3 d-flex align-items-center" style="height: 30px;"></div>
+                <div id="benyc3" class="mb-3 d-flex align-items-center" style="height: 30px;"></div>
+                <div id="benyc2" class="mb-3 d-flex align-items-center" style="height: 30px;"></div>
+                <div id="benyc1" class="mb-3 d-flex align-items-center" style="height: 30px;"></div>
+                <div id="benyc0" class="mb-3 d-flex align-items-center" style="height: 30px;"></div>
+            </div>
+        </div>
+    </div>
+    <!-- 变卦 -->
+    <div id="bianDiv" class="my-5 container-fluid" style="display: none;">
+        <div class="mb-4">
+            <span id="bianming"></span><br/>
+            <span id="bianguaci"></span><br/>
+        </div>
+        <div class="row justify-content-center">
+            <div style="width: 56px;">
+                <div id="bianls5" class="mb-3 d-flex align-items-center" style="height: 30px;"></div>
+                <div id="bianls4" class="mb-3 d-flex align-items-center" style="height: 30px;"></div>
+                <div id="bianls3" class="mb-3 d-flex align-items-center" style="height: 30px;"></div>
+                <div id="bianls2" class="mb-3 d-flex align-items-center" style="height: 30px;"></div>
+                <div id="bianls1" class="mb-3 d-flex align-items-center" style="height: 30px;"></div>
+                <div id="bianls0" class="mb-3 d-flex align-items-center" style="height: 30px;"></div>
+            </div>
+            <div class="fushen" style="width: 85px;"></div>
+            <div class="mb-4" style="width: 350px;">
+                <div class="mb-3 d-flex align-items-center">
+                    <span id="bianlgw5"></span>
+                    <canvas id="bianliuCanvas" width="200" height="30" class="mx-2"></canvas>
+                    <span id="biansy5"></span>
+                </div>
+                <div class="mb-3 d-flex align-items-center">
+                    <span id="bianlgw4"></span>
+                    <canvas id="bianwuCanvas" width="200" height="30" class="mx-2"></canvas>
+                    <span id="biansy4"></span>
+                </div>
+                <div class="mb-3 d-flex align-items-center">
+                    <span id="bianlgw3"></span>
+                    <canvas id="biansiCanvas" width="200" height="30" class="mx-2"></canvas>
+                    <span id="biansy3"></span>
+                </div>
+                <div class="mb-3 d-flex align-items-center">
+                    <span id="bianlgw2"></span>
+                    <canvas id="biansanCanvas" width="200" height="30" class="mx-2"></canvas>
+                    <span id="biansy2"></span>
+                </div>
+                <div class="mb-3 d-flex align-items-center">
+                    <span id="bianlgw1"></span>
+                    <canvas id="bianerCanvas" width="200" height="30" class="mx-2"></canvas>
+                    <span id="biansy1"></span>
+                </div>
+                <div class="d-flex align-items-center">
+                    <span id="bianlgw0"></span>
+                    <canvas id="bianchuCanvas" width="200" height="30" class="mx-2"></canvas>
+                    <span id="biansy0"></span>
+                </div>
+            </div>
+            <div class="mb-4 yaoci" style="width: 408px;">
+                <div id="bianyc5" class="mb-3 d-flex align-items-center" style="height: 30px;"></div>
+                <div id="bianyc4" class="mb-3 d-flex align-items-center" style="height: 30px;"></div>
+                <div id="bianyc3" class="mb-3 d-flex align-items-center" style="height: 30px;"></div>
+                <div id="bianyc2" class="mb-3 d-flex align-items-center" style="height: 30px;"></div>
+                <div id="bianyc1" class="mb-3 d-flex align-items-center" style="height: 30px;"></div>
+                <div id="bianyc0" class="mb-3 d-flex align-items-center" style="height: 30px;"></div>
+            </div>
+        </div>
+    </div>
+    <!-- 输入框 -->
+    <div class="modal modal-blur fade" id="modal-simple" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-body">
+                <div class="row my-3 justify-content-center">
+                    <select id="lyYear" class="form-select" style="width: 110px;"></select>
+                    <select id="lyMonth" class="form-select" style="width: 90px;"></select>
+                    <select id="lyDay" class="form-select" style="width: 90px;"></select>
+                    <select id="lyHour" class="form-select" style="width: 90px;"></select>
+                </div>
+                <div class="row mb-3 d-flex align-items-center">
+                    <div class="col-2 col-form-label">六爻</div>
+                    <div class="col">
+                        <select id="liu" class="form-select form-select-lg" aria-label=".form-select-lg example">
+                            <option value="" selected disabled hidden></option>
+                            <option value="8">少阴 " （ 1 正 2 背 ）</option>
+                            <option value="7">少阳 ' &nbsp;（ 1 背 2 正 ）</option>
+                            <option value="6">老阴 x （ 3 正 ）</option>
+                            <option value="9">老阳 o （ 3 背 ）</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row mb-3 d-flex align-items-center">
+                    <div class="col-2 col-form-label">五爻</div>
+                    <div class="col">
+                        <select id="wu" class="form-select form-select-lg" aria-label=".form-select-lg example">
+                            <option value="" selected disabled hidden></option>
+                            <option value="8">少阴 " （ 1 正 2 背 ）</option>
+                            <option value="7">少阳 ' &nbsp;（ 1 背 2 正 ）</option>
+                            <option value="6">老阴 x （ 3 正 ）</option>
+                            <option value="9">老阳 o （ 3 背 ）</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row mb-3 d-flex align-items-center">
+                    <div class="col-2 col-form-label">四爻</div>
+                    <div class="col">
+                        <select id="si" class="form-select form-select-lg" aria-label=".form-select-lg example">
+                            <option value="" selected disabled hidden></option>
+                            <option value="8">少阴 " （ 1 正 2 背 ）</option>
+                            <option value="7">少阳 ' &nbsp;（ 1 背 2 正 ）</option>
+                            <option value="6">老阴 x （ 3 正 ）</option>
+                            <option value="9">老阳 o （ 3 背 ）</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row mb-3 d-flex align-items-center">
+                    <div class="col-2 col-form-label">三爻</div>
+                    <div class="col">
+                        <select id="san" class="form-select form-select-lg" aria-label=".form-select-lg example">
+                            <option value="" selected disabled hidden></option>
+                            <option value="8">少阴 " （ 1 正 2 背 ）</option>
+                            <option value="7">少阳 ' &nbsp;（ 1 背 2 正 ）</option>
+                            <option value="6">老阴 x （ 3 正 ）</option>
+                            <option value="9">老阳 o （ 3 背 ）</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row mb-3 d-flex align-items-center">
+                    <div class="col-2 col-form-label">二爻</div>
+                    <div class="col">
+                        <select id="er" class="form-select form-select-lg" aria-label=".form-select-lg example">
+                            <option value="" selected disabled hidden></option>
+                            <option value="8">少阴 " （ 1 正 2 背 ）</option>
+                            <option value="7">少阳 ' &nbsp;（ 1 背 2 正 ）</option>
+                            <option value="6">老阴 x （ 3 正 ）</option>
+                            <option value="9">老阳 o （ 3 背 ）</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row d-flex align-items-center">
+                    <div class="col-2 col-form-label">初爻</div>
+                    <div class="col">
+                        <select id="chu" class="form-select form-select-lg" aria-label=".form-select-lg example">
+                            <option value="" selected disabled hidden></option>
+                            <option value="8">少阴 " （ 1 正 2 背 ）</option>
+                            <option value="7">少阳 ' &nbsp;（ 1 背 2 正 ）</option>
+                            <option value="6">老阴 x （ 3 正 ）</option>
+                            <option value="9">老阳 o （ 3 背 ）</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="cancelBtn" type="button" class="btn me-auto text-secondary" data-bs-dismiss="modal">取消</button>
+                <button id="submitBtn" type="button" class="btn btn-primary" data-bs-dismiss="modal" style="display: none;">确定</button>
+            </div>
+          </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
