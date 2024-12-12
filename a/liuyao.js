@@ -925,6 +925,23 @@ const WUXINGLIUQIN = {
     "火": {"火": "兄弟", "土": "子孙", "金": "妻财", "水": "官鬼", "木": "父母"},
     "土": {"土": "兄弟", "金": "子孙", "水": "妻财", "木": "官鬼", "火": "父母"}
 }
+// 地支旺相休囚死
+const ZHIWXXQS = {
+    "子":{"旺": ["子", "亥"], "相": ["寅", "卯"], "休": ["申", "酉"], "囚": ["丑", "辰", "未", "戌"], "死": ["巳", "午"]},
+    "丑":{"旺": ["丑", "辰", "未", "戌"], "相": ["申", "酉"], "休": ["巳", "午"], "囚": ["寅", "卯"], "死": ["子", "亥"]},
+    "寅":{"旺": ["寅", "卯"], "相": ["巳", "午"], "休": ["子", "亥"], "囚": ["申", "酉"], "死": ["丑", "辰", "未", "戌"]},
+    "卯":{"旺": ["寅", "卯"], "相": ["巳", "午"], "休": ["子", "亥"], "囚": ["申", "酉"], "死": ["丑", "辰", "未", "戌"]},
+    "辰":{"旺": ["丑", "辰", "未", "戌"], "相": ["申", "酉"], "休": ["巳", "午"], "囚": ["寅", "卯"], "死": ["子", "亥"]},
+    "巳":{"旺": ["巳", "午"], "相": ["丑", "辰", "未", "戌"], "休": ["寅", "卯"], "囚": ["子", "亥"], "死": ["申", "酉"]},
+    "午":{"旺": ["巳", "午"], "相": ["丑", "辰", "未", "戌"], "休": ["寅", "卯"], "囚": ["子", "亥"], "死": ["申", "酉"]},
+    "未":{"旺": ["丑", "辰", "未", "戌"], "相": ["申", "酉"], "休": ["巳", "午"], "囚": ["寅", "卯"], "死": ["子", "亥"]},
+    "申":{"旺": ["申", "酉"], "相": ["子", "亥"], "休": ["丑", "辰", "未", "戌"], "囚": ["巳", "午"], "死": ["寅", "卯"]},
+    "酉":{"旺": ["申", "酉"], "相": ["子", "亥"], "休": ["丑", "辰", "未", "戌"], "囚": ["巳", "午"], "死": ["寅", "卯"]},
+    "戌":{"旺": ["丑", "辰", "未", "戌"], "相": ["申", "酉"], "休": ["巳", "午"], "囚": ["寅", "卯"], "死": ["子", "亥"]},
+    "亥":{"旺": ["子", "亥"], "相": ["寅", "卯"], "休": ["申", "酉"], "囚": ["丑", "辰", "未", "戌"], "死": ["巳", "午"]}
+}
+// 子午冲，丑未冲，寅申冲，巳亥冲，卯酉冲，辰戌冲。
+const ZHICHONG = {"子": "午", "丑": "未", "寅": "申", "卯": "酉", "巳": "亥", "辰": "戌", "午": "子", "未": "丑", "申": "寅", "酉": "卯", "戌": "辰", "亥": "巳"}
 // 月破
 const MONTHPO = {"正": "申", "二": "酉", "三": "戌", "四": "亥", "五": "子", "六": "丑", "七": "寅", "八": "卯", "九": "辰", "十": "巳", "冬": "午", "腊": "未"}
 // 天元禄：日天干→ 甲在'寅'，乙在'卯'，丙戊在'巳'，丁己在'午'，庚在'申'，辛在'酉'，壬在'亥'，癸在'子'。
@@ -1006,12 +1023,17 @@ function textData(number, date, lunarDate){
     $('#dateLunar').text(dateStr+" "+lunarStr);
     $('#bazi').text(lunarDate.getBaZi().join(" "));
     $('#xunkong').text(xunkongStr);
-    $('#shensha').html(
+    $('#wangshuai').html(
         "<span>月破="+MONTHPO[lunarMonth]+"</span>"
-        +"<span class='mx-3'>贵人 (太极="+TAIJIGUIREN[dayGan].join("")+"</span>"
-        +"<span>天乙="+TIANYIGUIREN[dayGan]+"</span>"
-        +"<span class='mx-3'>天德="+TIANDEGUIREN[monthZhi]+"</span>"
-        +"<span>月德="+YUEDEGUIREN[monthZhi]+")</span><br/>"
+        +"<span class='mx-3'>日冲="+ZHICHONG[dayZhi]+"</span>"
+        +"<span>旺相="+ZHIWXXQS[monthZhi]["旺"].join("")+ZHIWXXQS[monthZhi]["相"].join("")+"</span>"
+        +"<span class='ms-3'>衰弱="+ZHIWXXQS[monthZhi]["休"].join("")+ZHIWXXQS[monthZhi]["囚"].join("")+ZHIWXXQS[monthZhi]["死"].join("")+"</span>"
+    );
+    $('#shensha').html(
+        "<span>贵人 (太极="+TAIJIGUIREN[dayGan].join("")+"</span>"
+        +"<span class='mx-3'>天乙="+TIANYIGUIREN[dayGan]+"</span>"
+        +"<span>天德="+TIANDEGUIREN[monthZhi]+"</span>"
+        +"<span class='ms-3'>月德="+YUEDEGUIREN[monthZhi]+")</span><br/>"
         +"<span>天元禄="+TIANYUANLU[dayGan]+"</span>"
         +"<span class='mx-3'>驿马="+YIMA[timeZhi]+"</span>"
         +"<span>天喜="+TIANXI[monthZhi]+"</span>"
@@ -1026,7 +1048,7 @@ function textData(number, date, lunarDate){
         +"<span>谋星="+MOUXING[dayZhi]+"</span>"
         +"<span class='mx-3'>羊刃="+YANGREN[dayGan]+"</span>"
         +"<span>劫煞="+JIESHA[dayZhi]+"</span>"
-        +"<span class='mx-3'>灾煞="+ZAISHA[dayZhi]+"</span>"
+        +"<span class='ms-3'>灾煞="+ZAISHA[dayZhi]+"</span>"
     );
     let data =  GUA[number];
     $('#benming').text("本卦: 上"+data.ming[0]+"下"+data.ming[2]+" "+data.ming[4]+" ("+data.gong[0]+" "+data.gong[1]+")");
