@@ -1178,28 +1178,4 @@ $(function(){
             $('#bianDiv').show();
         }else{$('#bianDiv').hide();}
     });
-
-        let year = 2024;
-        let month = 12;
-        let day = 12;
-        let hour = 22;
-        let date = [year, month, day, hour];
-        let lunarDate = Solar.fromYmdHms(year, month, day, hour, 0, 0).getLunar();  // 获取农历
-        let chu = YINYANG["7"];
-        let er = YINYANG["8"];
-        let san = YINYANG["9"];
-        let si = YINYANG["6"];
-        let wu = YINYANG["7"];
-        let liu = YINYANG["8"];
-        let ben = chu[0] + er[0] + san[0] + si[0] + wu[0] + liu[0] + "";
-        let bian = chu[1] + er[1] + san[1] + si[1] + wu[1] + liu[1] + "";
-        let benArray = [["chu", chu[0], chu[2]], ["er", er[0], er[2]], ["san", san[0], san[2]], ["si", si[0], si[2]], ["wu", wu[0], wu[2]], ["liu", liu[0], liu[2]]];
-        benArray.forEach(e => {drawCanvas("ben", e[0], e[1], e[2]);});
-        textData(ben, date, lunarDate);
-        if(ben != bian){
-            let bianArray = [["chu", chu[1], chu[2]], ["er", er[1], er[2]], ["san", san[1], san[2]], ["si", si[1], si[2]], ["wu", wu[1], wu[2]], ["liu", liu[1], liu[2]]];
-            bianArray.forEach(e => {drawCanvas("bian", e[0], e[1], e[2]);});
-            bianTextData(ben, bian, lunarDate);
-            $('#bianDiv').show();
-        }else{$('#bianDiv').hide();}
 });
