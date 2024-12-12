@@ -925,6 +925,8 @@ const WUXINGLIUQIN = {
     "火": {"火": "兄弟", "土": "子孙", "金": "妻财", "水": "官鬼", "木": "父母"},
     "土": {"土": "兄弟", "金": "子孙", "水": "妻财", "木": "官鬼", "火": "父母"}
 }
+// 月破
+const MONTHPO = {"正": "申", "二": "酉", "三": "戌", "四": "亥", "五": "子", "六": "丑", "七": "寅", "八": "卯", "九": "辰", "十": "巳", "冬": "午", "腊": "未"}
 // 天元禄：日天干→ 甲在'寅'，乙在'卯'，丙戊在'巳'，丁己在'午'，庚在'申'，辛在'酉'，壬在'亥'，癸在'子'。
 const TIANYUANLU = {"甲": "寅", "乙": "卯", "丙": "巳", "丁": "午", "戊": "巳", "己": "午", "庚": "申", "辛": "酉", "壬": "亥", "癸": "子"};
 // 驿马：时地支→ (申子辰)马为'寅'、(寅午戌)马为'申'、(巳酉丑)马为'亥'、(亥卯未)马为'巳'。1天1个。
@@ -993,7 +995,8 @@ function drawCanvas(prefix, name, number, color){
 
 function textData(number, date, lunarDate){
     let dateStr = date[0]+"年"+date[1]+"月"+date[2]+"日"+date[3]+"时";
-    let lunarStr = lunarDate.getMonthInChinese()+"月"+lunarDate.getDayInChinese();
+    let lunarMonth = lunarDate.getMonthInChinese();
+    let lunarStr = lunarMonth+"月"+lunarDate.getDayInChinese();
     let dayGan = lunarDate.getDayGan();     // 日天干
     let yearZhi = lunarDate.getYearZhi();   // 年地支
     let monthZhi = lunarDate.getMonthZhi(); // 月地支
@@ -1004,10 +1007,11 @@ function textData(number, date, lunarDate){
     $('#bazi').text(lunarDate.getBaZi().join(" "));
     $('#xunkong').text(xunkongStr);
     $('#shensha').html(
-        "贵人 (<span>太极="+TAIJIGUIREN[dayGan].join("")+"</span>"
-        +"<span class='mx-3'>天乙="+TIANYIGUIREN[dayGan]+"</span>"
-        +"<span>天德="+TIANDEGUIREN[monthZhi]+"</span>"
-        +"<span class='mx-3'>月德="+YUEDEGUIREN[monthZhi]+")</span><br/>"
+        "<span>月破="+MONTHPO[lunarMonth]+"</span>"
+        +"<span class='mx-3'>贵人 (太极="+TAIJIGUIREN[dayGan].join("")+"</span>"
+        +"<span>天乙="+TIANYIGUIREN[dayGan]+"</span>"
+        +"<span class='mx-3'>天德="+TIANDEGUIREN[monthZhi]+"</span>"
+        +"<span>月德="+YUEDEGUIREN[monthZhi]+")</span><br/>"
         +"<span>天元禄="+TIANYUANLU[dayGan]+"</span>"
         +"<span class='mx-3'>驿马="+YIMA[timeZhi]+"</span>"
         +"<span>天喜="+TIANXI[monthZhi]+"</span>"
