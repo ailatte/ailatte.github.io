@@ -940,8 +940,10 @@ const ZHIWXXQS = {
     "戌":{"旺": ["丑", "辰", "未", "戌"], "相": ["申", "酉"], "休": ["巳", "午"], "囚": ["寅", "卯"], "死": ["子", "亥"]},
     "亥":{"旺": ["子", "亥"], "相": ["寅", "卯"], "休": ["申", "酉"], "囚": ["丑", "辰", "未", "戌"], "死": ["巳", "午"]}
 }
-// 子午冲，丑未冲，寅申冲，巳亥冲，卯酉冲，辰戌冲。
-const ZHICHONG = {"子": "午", "丑": "未", "寅": "申", "卯": "酉", "巳": "亥", "辰": "戌", "午": "子", "未": "丑", "申": "寅", "酉": "卯", "戌": "辰", "亥": "巳"}
+// 子午冲，丑未冲，寅申冲，卯酉冲，辰戌冲，巳亥冲。
+const ZHICHONG = {"子": "午", "丑": "未", "寅": "申", "卯": "酉", "辰": "戌", "巳": "亥", "午": "子", "未": "丑", "申": "寅", "酉": "卯", "戌": "辰", "亥": "巳"}
+// 子丑合，寅亥合，卯戌合，辰酉合，巳申合，午未合。
+const ZHIHE = {"子": "丑", "丑": "子", "寅": "亥", "卯": "戌", "辰": "酉", "巳": "申", "午": "未", "未": "午", "申": "巳", "酉": "辰", "戌": "卯", "亥": "寅"}
 // 月破
 const MONTHPO = {"正": "申", "二": "酉", "三": "戌", "四": "亥", "五": "子", "六": "丑", "七": "寅", "八": "卯", "九": "辰", "十": "巳", "冬": "午", "腊": "未"}
 // 天元禄：日天干→ 甲在'寅'，乙在'卯'，丙戊在'巳'，丁己在'午'，庚在'申'，辛在'酉'，壬在'亥'，癸在'子'。
@@ -1023,11 +1025,10 @@ function textData(number, date, lunarDate){
     $('#dateLunar').text(dateStr+" "+lunarStr);
     $('#bazi').text(lunarDate.getBaZi().join(" "));
     $('#xunkong').text(xunkongStr);
-    $('#wangshuai').html(
+    $('#wangxiang').html(
         "<span>月破="+MONTHPO[lunarMonth]+"</span>"
         +"<span class='mx-3'>日冲="+ZHICHONG[dayZhi]+"</span>"
-        +"<span>旺相="+ZHIWXXQS[monthZhi]["旺"].join("")+ZHIWXXQS[monthZhi]["相"].join("")+"</span>"
-        +"<span class='ms-3'>衰弱="+ZHIWXXQS[monthZhi]["休"].join("")+ZHIWXXQS[monthZhi]["囚"].join("")+ZHIWXXQS[monthZhi]["死"].join("")+"</span>"
+        +"<span>日合="+ZHIHE[dayZhi]+"</span>"
     );
     $('#shensha').html(
         "<span>贵人 (太极="+TAIJIGUIREN[dayGan].join("")+"</span>"
@@ -1177,4 +1178,28 @@ $(function(){
             $('#bianDiv').show();
         }else{$('#bianDiv').hide();}
     });
+
+        let year = 2024;
+        let month = 12;
+        let day = 12;
+        let hour = 22;
+        let date = [year, month, day, hour];
+        let lunarDate = Solar.fromYmdHms(year, month, day, hour, 0, 0).getLunar();  // 获取农历
+        let chu = YINYANG["7"];
+        let er = YINYANG["8"];
+        let san = YINYANG["9"];
+        let si = YINYANG["6"];
+        let wu = YINYANG["7"];
+        let liu = YINYANG["8"];
+        let ben = chu[0] + er[0] + san[0] + si[0] + wu[0] + liu[0] + "";
+        let bian = chu[1] + er[1] + san[1] + si[1] + wu[1] + liu[1] + "";
+        let benArray = [["chu", chu[0], chu[2]], ["er", er[0], er[2]], ["san", san[0], san[2]], ["si", si[0], si[2]], ["wu", wu[0], wu[2]], ["liu", liu[0], liu[2]]];
+        benArray.forEach(e => {drawCanvas("ben", e[0], e[1], e[2]);});
+        textData(ben, date, lunarDate);
+        if(ben != bian){
+            let bianArray = [["chu", chu[1], chu[2]], ["er", er[1], er[2]], ["san", san[1], san[2]], ["si", si[1], si[2]], ["wu", wu[1], wu[2]], ["liu", liu[1], liu[2]]];
+            bianArray.forEach(e => {drawCanvas("bian", e[0], e[1], e[2]);});
+            bianTextData(ben, bian, lunarDate);
+            $('#bianDiv').show();
+        }else{$('#bianDiv').hide();}
 });
