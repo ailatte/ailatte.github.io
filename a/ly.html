@@ -11,29 +11,27 @@
     <script src="liuyao.js"></script>
     <style type="text/css">
         @media screen and (max-width: 500px) {
-            .shensha, .fushen, .yaoci {display: none;}
+            .fushen, .yaoci {display: none;}
         }
         @media screen and (min-width: 700px) {
-            .shensha, .fushen, .yaoci {display: block;}
+            .fushen, .yaoci {display: block;}
         }
     </style>
 </head>
 <body>
 <div class="my-3 text-center">
-    <div class="mb-5">
-        <button id="startBtn" type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#modal-simple">开始占卦</button>
-    </div>
+    <button id="startBtn" type="button" class="btn btn-secondary mb-5" data-bs-toggle="modal" data-bs-target="#modal-input">开始占卦</button>
     <div class="mb-4">
-        <span id="dateLunar"></span><br/>
-        <span id="bazi"></span><br/>
-        <span id="wangxiang"></span><br/>
-        <span id="shensha" class="shensha"></span>
+        <div id="dateLunar"></div>
+        <button id="bazi" class="btn text-dark" data-bs-toggle="collapse" href="#shensha" aria-expanded="false" aria-controls="collapseExample"></button>
+        <div id="wangxiang"></div>
+        <div id="shensha" class="collapse"></div>
     </div>
     <!-- 本卦 -->
     <div class="container-fluid">
         <div class="mb-4">
-            <span id="benming"></span><br/>
-            <span id="benguaci"></span><br/>
+            <button id="benming" class="btn text-dark" data-bs-toggle="modal" data-bs-target="#modal-text"></button>
+            <div id="benguaci"></div>
         </div>
         <div class="row justify-content-center">
             <div style="width: 60px;">
@@ -153,7 +151,7 @@
         </div>
     </div>
     <!-- 输入框 -->
-    <div class="modal modal-blur fade" id="modal-simple" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal modal-blur fade" id="modal-input" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
           <div class="modal-content">
             <div class="modal-body">
@@ -239,6 +237,64 @@
             <div class="modal-footer">
                 <button id="cancelBtn" type="button" class="btn me-auto text-secondary" data-bs-dismiss="modal">取消</button>
                 <button id="submitBtn" type="button" class="btn btn-primary" data-bs-dismiss="modal" style="display: none;">确定</button>
+            </div>
+          </div>
+        </div>
+    </div>
+    <!-- 提示 -->
+    <div class="modal modal-blur fade" id="modal-text" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <span>金-水-木-火-土</span><span class="ms-5">金.木.土.水.火</span>
+                <table class="table table-sm table-borderless my-4"><tbody>
+                    <tr><td>春季</td><td>正二</td><td>寅卯</td><td>木</td></tr>
+                    <tr><td>夏季</td><td>四五</td><td>巳午</td><td>火</td></tr>
+                    <tr><td>秋季</td><td>七八</td><td>申酉</td><td>金</td></tr>
+                    <tr><td>冬季</td><td>十冬</td><td>亥子</td><td>水</td></tr>
+                    <tr><td>四季</td><td>三六九腊</td><td>辰未戌丑</td><td>土</td></tr>
+                </tbody></table>
+                <table class="table table-sm table-borderless"><tbody>
+                    <tr><td>子午冲：冲中带克</td><td>午未合：合中有生</td></tr>
+                    <tr><td>丑未冲：本气相冲</td><td>申巳合：合中有克</td></tr>
+                    <tr><td>寅申冲：冲中带克</td><td>辰酉合：合中有生</td></tr>
+                    <tr><td>巳亥冲：冲中带克</td><td>卯戌合：合中有克</td></tr>
+                    <tr><td>卯酉冲：冲中带克</td><td>寅亥合：合中有生</td></tr>
+                    <tr><td>辰戌冲：本气相冲</td><td>子丑合：合中有克</td></tr>
+                </tbody></table>
+                <ul class="list-group list-group-flush my-4">
+                    <li class="list-group-item"><span>甲乙木：甲为阳木、乙为阴木</span><span class="ms-5">甲己合</span></li>
+                    <li class="list-group-item"><span>丙丁火：丙为阳火、丁为阴火</span><span class="ms-5">乙庚合</span></li>
+                    <li class="list-group-item"><span>戊己土：戊为阳土、己为阴土</span><span class="ms-5">丙辛合</span></li>
+                    <li class="list-group-item"><span>庚辛金：庚为阳金、辛为阴金</span><span class="ms-5">丁壬合</span></li>
+                    <li class="list-group-item"><span>壬癸水：壬为阳水、癸为阴水</span><span class="ms-5">戊癸合</span></li>
+                </ul>
+                <table class="table table-sm table-borderless"><tbody>
+                    <tr class="table-secondary"><td>甲子</td><td>甲戌</td><td>甲申</td><td>甲午</td><td>甲辰</td><td>甲寅</td></tr>
+                    <tr><td>乙丑</td><td>乙亥</td><td>乙酉</td><td>乙未</td><td>乙巳</td><td>乙卯</td></tr>
+                    <tr><td>丙寅</td><td>丙子</td><td>丙戌</td><td>丙申</td><td>丙戊</td><td>丙辰</td></tr>
+                    <tr><td>丁卯</td><td>丁丑</td><td>丁亥</td><td>丁酉</td><td>丁未</td><td>丁巳</td></tr>
+                    <tr><td>戊辰</td><td>戊寅</td><td>戊子</td><td>戊戌</td><td>戊申</td><td>戊午</td></tr>
+                    <tr><td>己巳</td><td>己卯</td><td>己丑</td><td>己亥</td><td>己酉</td><td>己未</td></tr>
+                    <tr><td>庚午</td><td>庚辰</td><td>庚寅</td><td>庚子</td><td>庚戌</td><td>庚申</td></tr>
+                    <tr><td>辛未</td><td>辛巳</td><td>辛卯</td><td>辛丑</td><td>辛亥</td><td>辛酉</td></tr>
+                    <tr><td>壬申</td><td>壬午</td><td>壬辰</td><td>壬寅</td><td>壬子</td><td>壬戌</td></tr>
+                    <tr><td>癸酉</td><td>癸未</td><td>癸巳</td><td>癸卯</td><td>癸丑</td><td>癸亥</td></tr>
+                    <tr class="table-danger"><td>戌亥</td><td>申酉</td><td>午未</td><td>辰巳</td><td>寅卯</td><td>子丑</td></tr>
+                </tbody></table>
+                <table class="table table-sm table-borderless my-4"><tbody>
+                    <tr><td>子</td><td>丑</td><td>寅</td></tr>
+                    <tr><td>23:00-00:59</td><td>01:00-02:59</td><td>03:00-04:59</td></tr>
+                    <tr><td>卯</td><td>辰</td><td>巳</td></tr>
+                    <tr><td>05:00-06:59</td><td>07:00-08:59</td><td>09:00-10:59</td></tr>
+                    <tr><td>午</td><td>未</td><td>申</td></tr>
+                    <tr><td>11:00-12:59</td><td>13:00-14:59</td><td>15:00-16:59</td></tr>
+                    <tr><td>酉</td><td>戌</td><td>亥</td></tr>
+                    <tr><td>17:00-18:59</td><td>19:00-20:59</td><td>21:00-22:59</td></tr>
+                </tbody></table>
             </div>
           </div>
         </div>

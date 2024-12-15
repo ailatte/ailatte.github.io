@@ -1023,8 +1023,10 @@ function textData(number, date, lunarDate){
         "<span>月破="+ZHICHONG[monthZhi]+"</span>"
         +"<span class='mx-3'>日空="+lunarDate.getDayXunKong()+"</span>"
         +"<span>日冲="+ZHICHONG[dayZhi]+"</span><br/>"
-        +"<span>旺相 (月="+WANGXIANG[monthZhi]+"</span>"
-        +"<span class='ms-3'>日="+WANGXIANG[dayZhi]+")</span>"
+        +"<span>旺相 (月="+WANGXIANG[monthZhi].join('')+"</span>"
+        +"<span class='ms-3'>日="+WANGXIANG[dayZhi].join('')+")</span><br/>"
+        +"<span>木=亥卯未申</span><span class='ms-3'>火=寅午戌亥</span><br/>"
+        +"<span>金=巳酉丑寅</span><span class='ms-3'>水=申子辰巳</span>"
     );
     $('#shensha').html(
         "<span>贵人 (太极="+TAIJIGUIREN[dayGan]+"</span>"
