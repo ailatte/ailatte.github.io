@@ -1029,7 +1029,7 @@ function textData(number, date, lunarDate){
         +"<span>金=巳酉丑寅</span><span class='ms-3'>水=申子辰巳</span>"
     );
     $('#shensha').html(
-        "<span>贵人 (太极="+TAIJIGUIREN[dayGan]+"</span>"
+        "<span>贵人 (太极="+TAIJIGUIREN[dayGan].join('')+"</span>"
         +"<span class='mx-3'>天乙="+TIANYIGUIREN[dayGan]+"</span>"
         +"<span>天德="+TIANDEGUIREN[monthZhi]+"</span>"
         +"<span class='ms-3'>月德="+YUEDEGUIREN[monthZhi]+")</span><br/>"
